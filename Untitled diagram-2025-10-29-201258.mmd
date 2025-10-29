@@ -1,0 +1,48 @@
+graph TB
+    Client[Client Applications] --> Gateway[API Gateway :8080]
+    
+    Gateway --> Discovery[Eureka Discovery :8761]
+    Gateway --> UserService[User Service :8081]
+    Gateway --> AdminService[Admin Service :8082]
+    Gateway --> BookingService[Booking Service :8083]
+    Gateway --> PaymentService[Payment Service :8084]
+    Gateway --> NotificationService[Notification Service :8085]
+    
+    UserService --> UserDB[(User Database)]
+    AdminService --> AdminDB[(Admin Database)]
+    BookingService --> BookingDB[(Booking Database)]
+    PaymentService --> PaymentDB[(Payment Database)]
+    NotificationService --> NotificationDB[(Notification Database)]
+    
+    UserService --> Redis[(Redis Cache)]
+    BookingService --> Redis
+    PaymentService --> Redis
+    
+    UserService --> RabbitMQ[RabbitMQ Message Broker]
+    AdminService --> RabbitMQ
+    BookingService --> RabbitMQ
+    PaymentService --> RabbitMQ
+    NotificationService --> RabbitMQ
+    
+    subgraph "External Services"
+        SMTP[SMTP Server]
+        EmailService[Email Service]
+    end
+    
+    NotificationService --> SMTP
+    NotificationService --> EmailService
+    
+    subgraph "Infrastructure"
+        MySQL[(MySQL 8.x)]
+        RedisInfra[(Redis 7.x)]
+        RabbitInfra[RabbitMQ 4.x]
+    end
+    
+    UserDB --> MySQL
+    AdminDB --> MySQL
+    BookingDB --> MySQL
+    PaymentDB --> MySQL
+    NotificationDB --> MySQL
+    
+    Redis --> RedisInfra
+    RabbitMQ --> RabbitInfra

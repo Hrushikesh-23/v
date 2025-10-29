@@ -1,0 +1,82 @@
+erDiagram
+    USER {
+        uuid id PK
+        string email UK
+        string full_name
+        string password_hash
+        enum role
+        datetime created_at
+        datetime updated_at
+    }
+    
+    PASSWORD_RESET_TOKEN {
+        uuid id PK
+        uuid user_id FK
+        string token UK
+        datetime expires_at
+        datetime created_at
+    }
+    
+    PARKING_LOT {
+        bigint id PK
+        string name
+        string address
+        datetime created_at
+        datetime updated_at
+    }
+    
+    PARKING_SPOT {
+        bigint id PK
+        bigint lot_id FK
+        string code
+        boolean available
+        datetime created_at
+        datetime updated_at
+    }
+    
+    BOOKING {
+        uuid id PK
+        uuid user_id FK
+        bigint lot_id FK
+        bigint spot_id FK
+        datetime start_time
+        datetime end_time
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+    
+    WAITLIST {
+        uuid id PK
+        uuid user_id FK
+        bigint lot_id FK
+        bigint spot_id FK
+        datetime start_time
+        datetime end_time
+        datetime created_at
+        datetime updated_at
+    }
+    
+    PAYMENT {
+        uuid id PK
+        uuid user_id FK
+        uuid booking_id FK
+        decimal amount
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+    
+    USER ||--o{ PASSWORD_RESET_TOKEN : "has"
+    USER ||--o{ BOOKING : "creates"
+    USER ||--o{ WAITLIST : "joins"
+    USER ||--o{ PAYMENT : "makes"
+    
+    PARKING_LOT ||--o{ PARKING_SPOT : "contains"
+    PARKING_LOT ||--o{ BOOKING : "hosts"
+    PARKING_LOT ||--o{ WAITLIST : "hosts"
+    
+    PARKING_SPOT ||--o{ BOOKING : "reserved_by"
+    PARKING_SPOT ||--o{ WAITLIST : "requested_for"
+    
+    BOOKING ||--o{ PAYMENT : "requires"

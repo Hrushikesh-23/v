@@ -532,20 +532,20 @@ The system includes several scheduled tasks:
 ### Common Issues
 
 1. **Service Discovery Issues**
-    - Ensure Eureka server is running first
-    - Check service registration in Eureka dashboard
+   - Ensure Eureka server is running first
+   - Check service registration in Eureka dashboard
 
 2. **Database Connection Issues**
-    - Verify MySQL is running
-    - Check database credentials in application.yml
+   - Verify MySQL is running
+   - Check database credentials in application.yml
 
 3. **RabbitMQ Connection Issues**
-    - Ensure RabbitMQ is running
-    - Check RabbitMQ management interface
+   - Ensure RabbitMQ is running
+   - Check RabbitMQ management interface
 
 4. **Redis Connection Issues**
-    - Verify Redis is running
-    - Check Redis connection settings
+   - Verify Redis is running
+   - Check Redis connection settings
 
 ### Logs
 Check application logs for detailed error information:
